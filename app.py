@@ -11,9 +11,34 @@ app.secret_key = "111"
 def index():
     if 'user_id' not in session:
         return redirect('/login')
+
+    user = User.search_id(session['user_id'])
+    if not user:
+        return "User not found", 404
+
+    if request.method == 'POST':
+        try:
+            name_img = request.form.get('content', '')
+            file_to_uplode = request.files.get('file')
+
+            if not file_to_uplode.content_type.startswith('image/'):
+                return "Uploaded file is not an image", 400
+
+            file_data = file_to_uplode.read()
+            new_img = Image.creating_by_objectid(
+                uploaded_by=user.user_id,
+                filename=name_img,
+                file_content=file_data
+            )
+            new_img.save()
+
+            return redirect('/')
+        except Exception as e:
+            return f"Error to adding your image: {e}", 500
+
     else:
-        user = User.search_id(session['user_id'])
-        return render_template('index.html')
+        images = Image.find_by_user(user.user_id)
+        return render_template('index.html', images=images)
 
 
 @app.route('/register', methods=['GET', 'POST'])
