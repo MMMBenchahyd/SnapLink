@@ -3,11 +3,17 @@ from models.image import Image
 from models.User import User
 from db import db
 from bson import ObjectId
+import paypalrestsdk
 
 
 app = Flask(__name__)
 app.secret_key = "111"
 
+paypalrestsdk.configure({
+    "mode": "sandbox",
+    "client_id": "AQorRJu7Scrg_QGT1jcX4JSiWl2-PEH1DPnWpA8C1vNublhXlHsr3GUzIMsEsXS0JzycOTnVtxvenwcL",
+    "client_secret": "EKtRS0pNR57bF_d_wiblVJdoo0eJYZdOu5u1tGxOhqP2HvZ2gBxEA0YRVAZ_Ha1ZFbICqyRK8aICEh1b"
+})
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -133,6 +139,60 @@ def get_image(img_id):
         return Response(img.file_content, mimetype='image/png')
     except Exception as e:
         return f"Error showing image: {e}", 500
+
+@app.route('/pay', methods=['GET', 'POST'])
+def pay():
+    payment = paypalrestsdk.Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": url_for('payment_success', _external=True),
+            "cancel_url": url_for('payment_cancel', _external=True)
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "donate",
+                    "price": "0.99",
+                    "currency": "USD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "total": "0.99",
+                "currency": "USD"
+            },
+            "description": "Thanks for donating."
+        }]
+    })
+
+    if payment.create():
+        for link in payment.links:
+            if link.rel == "approval_url":
+                return redirect(link.href)
+    else:
+        return f"Error: {payment.error}"
+
+@app.route('/payment_success')
+def payment_success():
+    payment_id = request.args.get('paymentId')
+    payer_id = request.args.get('PayerID')
+
+    if not payment_id or not payer_id:
+        return "no donating done !!!"
+
+    payment = paypalrestsdk.Payment.find(payment_id)
+
+    if payment.execute({"payer_id": payer_id}):
+        return "Payment successful!"
+    else:
+        return f"Payment failed: {payment.error}"
+
+@app.route('/payment_cancel')
+def payment_cancel():
+    return "Payment canceled."
 
 
 if __name__ == "__main__":
