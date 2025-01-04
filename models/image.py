@@ -35,3 +35,10 @@ class Image:
     @classmethod
     def creating_by_objectid(cls, uploaded_by, filename, file_content):
         return cls(uploaded_by=uploaded_by, filename=filename, file_content=file_content)
+    
+    @classmethod
+    def find_by_img_id(cls, img_id):
+        img_data = db.images.find_one({"img_id": img_id})
+        if img_data:
+            return cls(**img_data)
+        return None

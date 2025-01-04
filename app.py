@@ -1,6 +1,8 @@
-from flask import Flask ,render_template ,request ,redirect, session
+from flask import Flask ,render_template ,request ,redirect, session, Response
 from models.image import Image
 from models.User import User
+from db import db
+from bson import ObjectId
 
 
 app = Flask(__name__)
@@ -81,6 +83,56 @@ def login():
 def logout():
     session.pop('user_id', None)
     return redirect('/login')
+
+
+@app.route('/update/<string:id>', methods=['POST', 'GET'])
+def update(id):
+    try:
+        img_update = Image.find_by_img_id(id)# search image by id
+        if not img_update:
+            return 'Image not found', 404
+    except Exception as e:
+        print(f"Error fetching image: {e}")
+        return 'There was an issue retrieving this image', 500
+
+    if request.method == 'POST':
+        try:
+            new_filename = request.form['newname']
+            img_update.filename = new_filename
+            img_update.save()
+            return redirect('/')
+        except Exception as e:
+            print(f"Error updating image: {e}")
+            return 'There was an issue updating this image', 500
+
+    return render_template('update.html', image=img_update)
+
+
+@app.route('/delete/<string:id>')
+def delete(id):
+    try:
+        object_id = ObjectId(id)
+        img_deleting = db.images.find_one({"_id": object_id})
+        if not img_deleting:
+            return "Image not found.", 404
+        # Delete img
+        db.images.delete_one({"_id": object_id})
+        return redirect('/')
+    except Exception as e:
+        print(f"Error: {e}")
+        return "There was an issue deleting this image.", 500
+    
+
+@app.route('/image/<string:img_id>', methods=['GET'])
+def get_image(img_id):
+    try:
+        img = Image.find_by_img_id(img_id)
+        if not img or not img.file_content:
+            return "Image not found", 404
+
+        return Response(img.file_content, mimetype='image/png')
+    except Exception as e:
+        return f"Error showing image: {e}", 500
 
 
 if __name__ == "__main__":

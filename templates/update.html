@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block head %} 
+    <title></title>
+{% endblock %}
+
+{% block bady %}
+    <div class="newname">
+        <h1 style="text-align: center;">updating name image</h1>
+        
+        <form action="/update/{{image.img_id}}" method="POST">
+            <input type="text" name="newname" id="newname" value="{{image.newname}}">
+            <input type="submit" value="Update name image">
+        </form>
+    </div>
+{% endblock %}
