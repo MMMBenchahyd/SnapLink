@@ -1,4 +1,4 @@
-from flask import Flask ,render_template ,request ,redirect, session
+from flask import Flask ,render_template ,request ,redirect, session, Response
 from models.image import Image
 from models.User import User
 from db import db
@@ -122,5 +122,18 @@ def delete(id):
         print(f"Error: {e}")
         return "There was an issue deleting this image.", 500
     
+
+@app.route('/image/<string:img_id>', methods=['GET'])
+def get_image(img_id):
+    try:
+        img = Image.find_by_img_id(img_id)
+        if not img or not img.file_content:
+            return "Image not found", 404
+
+        return Response(img.file_content, mimetype='image/png')
+    except Exception as e:
+        return f"Error showing image: {e}", 500
+
+
 if __name__ == "__main__":
     app.run(debug=True)
