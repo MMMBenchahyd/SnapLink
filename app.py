@@ -1,6 +1,7 @@
 from flask import Flask ,render_template ,request ,redirect, session
 from models.image import Image
 from models.User import User
+import paypalrestsdk
 
 
 app = Flask(__name__)
@@ -10,7 +11,7 @@ app.secret_key = "111"
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     user = User.search_id(session['user_id'])
     if not user:
@@ -40,18 +41,22 @@ def index():
         images = Image.find_by_user(user.user_id)
         return render_template('index.html', images=images)
 
+@app.route('/index')
+def home_page():
+    return render_template('index.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']
         password = request.form['password']
 
-        if User.find_by_username(username):
-            return "Username already exists", 400
+        if User.find_by_username_or_email(username) or User.find_by_email(email):
+            return "Username or email already exists", 400
 
-
-        new_user = User(username=username)
+        new_user = User(username=username, email=email)
         new_user.set_password(password)
         new_user.save()
 
@@ -63,16 +68,15 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        identifier = request.form['username']  # Can be username or email
         password = request.form['password']
 
-        user = User.find_by_username(username)
+        user = User.find_by_username_or_email(identifier)
         if user and user.check_password(password):
-            # userid storing.
             session['user_id'] = user.user_id
             return redirect('/')
         else:
-            return "Invalid username or password", 401
+            return "Invalid username/email or password", 401
 
     return render_template('login.html')
 
@@ -80,7 +84,63 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return redirect('/login')
+    return redirect('/index')
+
+@app.route('/pay', methods=['GET', 'POST'])
+def pay():
+    payment = paypalrestsdk.Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"
+        },
+        "redirect_urls": {
+            "return_url": url_for('payment_success', _external=True),
+            "cancel_url": url_for('payment_cancel', _external=True)
+        },
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "donate",
+                    # "sku": "12345",
+                    "price": "0.99",
+                    "currency": "USD",
+                    "quantity": 1
+                }]
+            },
+            "amount": {
+                "total": "0.99",
+                "currency": "USD"
+            },
+            "description": "Thanks for donating."
+        }]
+    })
+
+    if payment.create():
+        for link in payment.links:
+            if link.rel == "approval_url":
+                return redirect(link.href)
+    else:
+        return f"Error: {payment.error}"
+
+@app.route('/payment_success')
+def payment_success():
+    payment_id = request.args.get('paymentId')
+    payer_id = request.args.get('PayerID')
+
+    if not payment_id or not payer_id:
+        return "no donating done !!!"
+
+    payment = paypalrestsdk.Payment.find(payment_id)
+
+    if payment.execute({"payer_id": payer_id}):
+        return "Payment successful!"
+    else:
+        return f"Payment failed: {payment.error}"
+
+@app.route('/payment_cancel')
+def payment_cancel():
+    return "Payment canceled."
+
 
 
 if __name__ == "__main__":

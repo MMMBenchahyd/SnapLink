@@ -1,52 +1,119 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="SnapLink - Easy tool to store,share images online. More than 15 different image extention supported.">
 
-{% block head %} 
-    <title>image_master</title>
-{% endblock %}
+      <!--=============== FAVICON ===============-->
+      <link rel="shortcut icon" href="static/img/favicon-32x32.png" type="image/x-icon">
 
-{% block bady %}
-<body>
-    <h1>Images Tool</h1>
-    <a href="/logout">Logout</a>
-    <table>
-        <tr>
-            <th>Image Name</th>
-            <th>Date Created</th>
-            <th>ID</th>
-            <th>Image Uploaded</th>
-            <th>Actions</th>
-        </tr>
-        {% for image in images %}
-        <tr>
-            <td>{{ image.filename }}</td>
-            <td>{{ image.date_created.date() }}</td>
-            <td>{{ image.img_id }}</td>
-            <td>
-                {% if image.file_content and image.file_content|length > 0 %}
-                <span style="color: green;">Yes</span>
-                {% else %}
-                <span style="color: red;">No</span>
-                {% endif %}
-            </td>
-            <td>
-                <a href="/delete/{{ image._id }}">Delete</a>
-                <br>
-                <a href="/update/{{ image.img_id }}">Update</a>
-                <br>
-                <a href="/retrieve/{{ image.img_id }}">Retreve</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <form action="/" method="POST" enctype="multipart/form-data">
-        <label for="content">Filename:</label>
-        <input type="text" name="content" id="content" required>
-        <label for="file">Upload File:</label>
-        <input type="file" name="file" id="file" required>
-        <button type="submit">Upload</button>
-    </form>
-</body>
-{% endblock %}
+      <!--=============== REMIXICONS ===============-->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
 
 
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="static/css/styles.css">
+
+      <title>Live test Responsive SnapLink website - alx swe project</title>
+   </head>
+   <body>
+      <!--==================== HEADER ====================-->
+      <header class="header" id="header">
+
+         <!-- Navigation bar   -->
+         <nav class="nav container">
+            <a href="/index" class="nav__logo">
+               <i class="ri-share-box-line"></i>
+               <span>SnapLink</span>
+            </a>
+            <!-- adding menu items/ menu item list -->
+            <div class="nav__menu" id="nav-menu">
+               <ul class="nav__list">
+                  <li>
+                     <a href="/pay" class="nav__link">Donate</a>
+                  </li>
+                  <li>
+                     <a href="/login" class="nav__link">Log In</a>
+                  </li>
+                  <li>
+                     <a href="/register" class="nav__link">Sign Up</a>
+                  </li>
+                  <!-- {% if user_is_authenticated %}  --> 
+                  <li> 
+                     <a href="dashboard.html" class="nav__link"><i class="ri-gallery-view-2"></i> My Images</a>
+                  </li>
+                  <!-- {% endif %} --> 
+               </ul>
+
+               <!-- adding close button -->
+               <div class="nav__close" id="nav-close">
+                  <i class="ri-close-large-fill"></i>
+               </div>
+
+            </div>
+
+            <!-- toggle button -->
+             <div class="nav__toggle" id="nav-toggle">
+               <i class="ri-apps-2-line"></i>
+             </div>
+            
+         </nav>
+
+      </header>
+
+      <!--==================== MAIN ====================-->
+      <main class="main">
+         <!--==================== HOME ====================-->
+         <section class="home">
+<!--           <img src="assets/img/img-bgzk.svg" alt="image" class="home__bg">        -->       
+            <div class="home__container container">
+               <div class="home__data">
+                  <h1 class="home__title">Welcome to<br> <i class="ri-share-box-line"></i> SanpLink</h1>
+                  <p class="home__description">Effortless image hosting made simple!<br>
+                     Upload your images, get instant links, and share them anywhere online.<br><br> 
+                  
+                  <a href="/register" class="home__button">Start Uploading Now</a>
+                  <strong><br><br>Why SnapLink?</strong>
+                  
+                     <br><i class="ri-timer-flash-line"></i> Fast and reliable hosting
+                     <br><i class="ri-user-shared-2-line"></i> Easy-to-use sharing links
+                     <br><i class="ri-loop-right-line"></i> Unlimited possibilities.
+                  </p>
+                  <div class="home__dynamic-img">
+                     <img src="static/img/img-homepage.png" alt="Dynamic Image" />
+                  </div>
+                   
+
+               </div>
+
+
+            </div>
+
+         </section>
+      </main>
+         <!--==================== FOOTER ====================-->
+      <footer class="footer">
+            <ul class="footer__list">
+               <li>
+                  <a href="terms.html" class="footer__link">Terms of Service</a>
+               </li>
+               <li>
+                  <a href="privacy.html" class="footer__link">Privacy Policy</a>
+               </li>
+               <li>
+                  <a href="contact.html" class="footer__link">Contact Us</a>
+               </li>
+               <li>
+                  <a href="about.html" class="footer__link">About Us</a>
+               </li>
+               <li>
+                  <p class="footer__link">© 2024 SnapLink</p>
+               </li>
+            </ul>
+      </footer>
+ 
+      <!--=============== MAIN JS ===============-->
+      <script src="static/js/main.js"></script>
+   </body>
+</html>
