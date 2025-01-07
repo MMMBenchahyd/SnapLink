@@ -1,9 +1,10 @@
-from flask import Flask ,render_template ,request ,redirect, session, Response
+from flask import Flask ,render_template ,request ,redirect, session, Response, send_file
 from models.image import Image
 from models.User import User
 from db import db
 from bson import ObjectId
 import paypalrestsdk
+from io import BytesIO
 
 
 app = Flask(__name__)
@@ -193,6 +194,23 @@ def payment_success():
 @app.route('/payment_cancel')
 def payment_cancel():
     return "Payment canceled."
+
+
+@app.route('/retrieve/<string:img_id>')
+def retrieve(img_id):
+    try:
+        img = Image.find_by_img_id(img_id)
+
+        if not img or not img.file_content:
+            return "Image not found.", 404
+
+        return send_file(
+            BytesIO(img.file_content),
+            as_attachment=True,
+            download_name=f"{img.filename.split('.')[0]}.png"
+        )
+    except Exception as e:
+        return f"Error retrieving image: {e}", 500
 
 
 if __name__ == "__main__":
