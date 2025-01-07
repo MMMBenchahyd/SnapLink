@@ -1,33 +1,34 @@
-/*=============== GOOGLE FONTS ===============*/
+/*=============== we used monstreat font by GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@400;500;600;700&display=swap");
 
-/*=============== VARIABLES CSS ===============*/
+/*=============== styling variables ===============*/
 :root {
   --header-height: 3.5rem;
 
-  /*========== Colors ==========*/
+  /*========== colors ==========*/
+  /*in general we used color mode HSL(hue, saturation, lightness)*/
   --hover-color: hsl(334, 37%, 41%);
   --first-color: 	hsla(196, 96%, 72%, 0.4);
   --first-color-alt: 		hsl(199, 40%, 50%);
   --gradient-color: linear-gradient(130deg, var(--first-color),var(--first-color-alt));
   --black-color: hsl(323, 8%, 20%);
 
-  /*========== Font and typography ==========*/
+  /*========== font and typography ==========*/
   --body-font: "Montserrat Alternates", sans-serif;
   --biggest-font-size: 2.5rem;
   --normal-font-size: .938srem;
 
-  /*========== Font weight ==========*/
+  /*========== font weight ==========*/
   --font-medium: 500;
   --font-semi-bold: 600;
   --font-bold: 700;
 
-  /*========== z index ==========*/
+  /*========== z index (positionnig)==========*/
   --z-tooltip: 10;
   --z-fixed: 100;
 }
 
-/*========== Responsive typography ==========*/
+/*========== responsive typography ==========*/
 @media screen and (min-width: 1150px) {
   :root {
     --biggest-font-size: 5.5rem;
@@ -35,7 +36,7 @@
   }
 }
 
-/*=============== base ===============*/
+/*=============== base styling ===============*/
 * {
   box-sizing: border-box;
   padding: 0;
@@ -47,7 +48,6 @@ body {
   font-size: var(--normal-font-size);
   color: var(--black-color);
   background-color: hsla(196, 96%, 72%, 0.4);
-
 }
 
 ul {
@@ -58,8 +58,7 @@ a {
   text-decoration: none;
 }
 
-
-/*=============== css classed (used many times) ===============*/
+/*=============== this is a reusable css classes ===============*/
 .container {
   max-width: 1120px;
   margin-inline: 1.5rem;
@@ -70,7 +69,7 @@ a {
   padding-bottom: 1rem; 
 }
 
-/*=============== header & bav bar ===============*/
+/*=============== header and navigation bar ===============*/
 .header{
   position: fixed;
   width: 100%;
@@ -110,7 +109,7 @@ a {
   cursor: pointer;
 }
 
-/* navigation for mobile devices */
+/* Navigation for mobile devices */
 @media screen and (max-width: 1150px){
   .nav__menu{
     position: fixed;
@@ -145,12 +144,12 @@ a {
   top: 1rem;
   right: 1.5rem;
 }
-/* showing the menu */
+/* to show menu */
 .show-menu{
   top: 0;
 }
 
-/* adding a blur header see js file*/
+/* Adding blur header see js file*/
 
 .blur-header::after{
   content: '';
@@ -166,7 +165,7 @@ a {
 
 }
 
-/*=============== home ===============*/
+/*=============== Home page or Styling for proncipale pages ===============*/
 .home{
   position: relative;
 }
@@ -174,7 +173,6 @@ a {
   padding-top: 4.5rem;
   height: 100vh;
 }
-
 .home__data{
   position: relative;
   text-align: center;
@@ -186,8 +184,7 @@ a {
 }
 .page__title{
   font-size: 2.2rem;
-  text-align: center;
-  
+  text-align: center; 
 }
 .home__description{
   font-weight: var(--font-medium);
@@ -219,7 +216,7 @@ a {
   z-index: var(--z-tooltip);
 }
 
-/*====== adding a dynamic image======*/
+/*=============== adding a dynamic image =====  ==========*/
 /* Default behavior for smaller devices */
 .home__dynamic-img {
   margin-top: 1.5rem; 
@@ -248,10 +245,9 @@ a {
   }
 }
 
+/*============== upload dashbord table ================*/
 
-
- /*table*/
-
+ /*upload table (may be changed later with/or by dynamic table)*/
 table, td, th {
   border: 2px solid #000000;
 }
@@ -271,14 +267,296 @@ td {
   padding: 5px;
   height: auto;
 }
+ /*upload form*/
+ input[type="file"] {
+  display: none;
+}
+
+form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"], input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #004346;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: var(--font-medium);
+  font: var(--normal-font-size);
+}
+
+button:hover {
+  background-color: #09bc8a;
+}
+
+.custom-file-label {
+  display: inline-block;
+  background-color: #004346;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-right: 10px;
+  max-width: 300px; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-file-label:hover {
+  background-color: #09bc8a;
+}
+/* Styling for the cancel button in upload form*/
+    .cancel-button {
+      background-color: #e74c3c;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      display: none;
+  }
+
+  .cancel-button:hover {
+      background-color: #c0392b;
+  }
+
+/* ================= galery style =====================*/
+.gallery-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.image-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.image-item {
+  width: 200px;
+  height: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 3px solid var(--black-color); 
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-thumbnail, .no-images {
+  color: red;
+  font-weight: bold;
+}
+
+.no-thumbnail {
+  padding: 5px;
+  border: 1px dashed #ccc;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/*=================   style for popup galery =============*/
+
+    /* Popup Styles */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+  }
+
+  .popup-content {
+      position: relative;
+      width: 800px;
+      height: 500px;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      padding: 1rem;
+  }
+  #popup-image {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px dashed DarkSlateBlue;
+      background-color: var(--first-color);
+      text-align: left;
+
+  }
+
+  .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+  }
+  .close-btn:hover {
+    color: red;
+}
+
+/* ============== authentication log in / register styling =================== */
+.auth-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-card {
+  background: hsla(0, 0%, 100%, 1);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px hsla(0, 4%, 20%, 0.1);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  align-content: center;
+}
+
+.auth-title {
+  color: var(--black-color);
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: .5rem;
+}
+
+.form-label {
+  display: block;
+  color: var(--black-color);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid hsl(214, 32%, 91%) ;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color .8s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--black-color);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--black-color);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.auth-button:hover {
+  background: hsl(323, 100%, 50%);
+}
+
+.auth-link {
+  display: block;
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--black-color);
+  text-decoration: none;
+}
+
+.auth-link a {
+  color: hsl(323, 100%, 50%);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-link a:hover {
+  text-decoration: underline;
+}
 
 
+/*====================== styling for thumbnails for gallery/popupPage/Uploading pages =====================*/
+.thumbnail-container {
+  display: flex;
+  align-items: center;
+  border: 2px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
 
+.thumbnail-container img {
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 15px;
+}
 
+.thumbnail-description {
+  flex: 1;
 
+}
 
+.thumbnail-description p {
+  margin: 5px 0;
+  font-size: var(--font-medium);
+}
 
-/*=============== footer ===============*/
+.thumbnail-description p span {
+  font-weight: bold;
+}
+
+/*=============== footer css ===============*/
 .footer {
   position: relative; 
   bottom: 0; 
@@ -287,7 +565,7 @@ td {
   background-color: hsl(196, 66%, 92%); 
   padding: 1rem 1.5rem;
   text-align: center;
-/*   box-shadow: 0 -2px 12px hsla(353, 90%, 4%, .2); /* optional shadow must be tested by zakaria */
+/*   box-shadow: 0 -2px 12px hsla(353, 90%, 4%, .2); /* optional shadow removed for better ui ux - by zakaria */
   z-index: var(--z-fixed); 
 }
 
@@ -313,13 +591,12 @@ td {
 }
 
 
-
-/*=============== BREAKPOINTS ===============*/
+/*=================  Breakpoints  (responsivity: mobile first)==========0========*/
 /* For small devices */
 @media screen and (max-width: 350px){
   .container{
-    margin-inline: auto;/*had star kant 1rem raj3tha auto */
-    height: auto;/*had star  makantch hta dert height auto lta7t*/
+    margin-inline: auto;/*in testing phase : had star kant 1rem raj3tha auto */
+    height: auto;/*in testing phase : had star  makantch hta dert height auto lta7t*/
     
   }
   .home__title{
@@ -330,8 +607,8 @@ td {
 
 @media screen and (min-width: 350px) and (max-width: 680px){
   .home__container{
-    height: auto; /* kant 700px for home page */
-    margin-inline: auto;/*had star  makantch hta dert height auto lta7t*/
+    height: auto; /* in testing phase _ kant 700px for home page */
+    margin-inline: auto;/* in testing phase : had star  makantch hta dert height auto lta7t*/
   }
 
   
@@ -384,13 +661,13 @@ td {
   }
 }
 
-/* For 2K resolutions (2048 x 1152) */
+/* for 2k resolutions (2048 x 1152) */
 @media screen and (min-width:2048px) and (min-height: 1100px){
   .container{
     max-width: 1300px;
   }
   .home__container{
-    height: 100vh; /*hna kant 100vh*/
+    height: 100vh; 
     display: grid;
   }
   .home__data{
