@@ -55,15 +55,14 @@ def register():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        email = request.form['email']
 
-        if User.find_by_username(username):
-            return "Username already exists", 400
+        if User.find_by_username_or_email(username) or User.find_by_email(email):
+            return "Username or email already exists", 400
 
-
-        new_user = User(username=username)
+        new_user = User(username=username, email=email)
         new_user.set_password(password)
         new_user.save()
-
         return redirect('/login')
 
     return render_template('register.html')
@@ -72,16 +71,15 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        username = request.form['username']
+        identifier = request.form['username']
         password = request.form['password']
 
-        user = User.find_by_username(username)
+        user = User.find_by_username_or_email(identifier)
         if user and user.check_password(password):
-            # userid storing.
             session['user_id'] = user.user_id
             return redirect('/')
         else:
-            return "Invalid username or password", 401
+            return "Invalid username/email or password", 401
 
     return render_template('login.html')
 
