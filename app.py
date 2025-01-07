@@ -47,7 +47,7 @@ def index():
 
     else:
         images = Image.find_by_user(user.user_id)
-        return render_template('index.html', images=images, user_is_authenticated=True))
+        return render_template('index.html', images=images, user_is_authenticated=True)
 
 @app.route('/index')
 def home_page():
