@@ -1,4 +1,4 @@
-from flask import Flask ,render_template ,request ,redirect, session, Response, send_file
+from flask import Flask ,render_template ,request ,redirect, session, Response, send_file, url_for
 from models.image import Image
 from models.User import User
 from db import db
@@ -19,7 +19,7 @@ paypalrestsdk.configure({
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/index')
 
     user = User.search_id(session['user_id'])
     if not user:
@@ -47,7 +47,11 @@ def index():
 
     else:
         images = Image.find_by_user(user.user_id)
-        return render_template('index.html', images=images)
+        return render_template('index.html', images=images, user_is_authenticated=True))
+
+@app.route('/index')
+def home_page():
+    return render_template('index.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
