@@ -1,12 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+    content="SnapLink - Easy tool to store,share images online. More than 15 different image extention supported.">
+    <!-- =============== fav icon ===============-->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon-32x32.png') }}" type="image/x-icon">
+    <!--=============== remix icons link  ===============-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
+    <!--=============== snaplink style sheet ===============-->
     <link rel="stylesheet" href="{{ url_for('static' ,filename='css/main.css') }}">
+
+
     {% block head %} {% endblock %}
+
+
 </head>
+
 <body>
-    {% block bady %}{% endblock %}
+      <!--==================== header ====================-->
+      <header class="header" id="header">
+
+         <!-- navigation bar   -->
+         <nav class="nav container">
+            <a href="/" class="nav__logo">
+              <i class="ri-share-box-line"></i>
+              <span>SnapLink</span> </a>
+           <!-- adding menu items/ menu item list -->
+            <div class="nav__menu" id="nav-menu">
+               <ul class="nav__list">
+                 <li>
+                    <a href="/pay" class="nav__link">Donate</a>
+                 </li>
+                
+                 {% if user_is_authenticated %}
+                 <li>
+                    <a href="/logout" class="nav__link">Log out</a>
+                 </li> 
+                 <li> 
+                  <a href="/gallery" class="nav__link"><i class="ri-gallery-view-2"></i> My Images</a>
+                 </li>
+                 <li> 
+                  <a href="/upload" class="nav__link"> <i class="ri-user-fill"></i>Upload images </a>
+                 </li>
+                 {% else %}
+                    <li>
+                     <a href="/login" class="nav__link">Log In</a>
+                      </li>
+                    <li>
+                     <a href="/register" class="nav__link">Sign Up</a>
+                    </li>
+                 {% endif %} 
+               </ul>
+
+               <!-- adding close button -->
+               <div class="nav__close" id="nav-close">
+                  <i class="ri-close-large-fill"></i>
+               </div>
+
+            </div>
+
+            <!-- toggle button -->
+            <div class="nav__toggle" id="nav-toggle">
+              <i class="ri-apps-2-line"></i>
+            </div>
+           
+         </nav>
+
+      </header>
+
+      <br>
+
+      {% block body %} {% endblock %}
+
+      <br>
+
+     <!--==================== FOOTER ====================-->
+      <footer class="footer">
+        <ul class="footer__list">
+           <li>
+              <a href="/terms" class="footer__link">Terms of Service</a>
+           </li>
+           <li>
+              <a href="/privacy" class="footer__link">Privacy Policy</a>
+           </li>
+           <li>
+              <a href="/contact" class="footer__link">Contact Us</a>
+           </li>
+           <li>
+              <a href="/about" class="footer__link">About Us</a>
+           </li>
+           <li>
+              <p class="footer__link">© 2024 SnapLink</p>
+           </li>
+        </ul>
+      </footer>
+
+    <!--=============== MAIN JS ===============-->
+
+      <script src="{{ url_for('static' ,filename='js/main.js') }}"></script>
 </body>
+
 </html>
