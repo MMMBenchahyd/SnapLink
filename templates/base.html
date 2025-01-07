@@ -12,54 +12,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.css">
     <!--=============== snaplink style sheet ===============-->
     <link rel="stylesheet" href="{{ url_for('static' ,filename='css/main.css') }}">
-
-
-    {% block head %} {% endblock %}
-
-
 </head>
 
 <body>
       <!--==================== header ====================-->
       <header class="header" id="header">
-
          <!-- navigation bar   -->
          <nav class="nav container">
-            <a href="/" class="nav__logo">
-              <i class="ri-share-box-line"></i>
-              <span>SnapLink</span> </a>
-           <!-- adding menu items/ menu item list -->
+               <a href="/" class="nav__logo"> <i class="ri-share-box-line"></i> <span>SnapLink</span> </a>
+            <!-- adding menu items/ menu item list -->
             <div class="nav__menu" id="nav-menu">
                <ul class="nav__list">
-                 <li>
-                    <a href="/pay" class="nav__link">Donate</a>
-                 </li>
-                
-                 {% if user_is_authenticated %}
-                 <li>
-                    <a href="/logout" class="nav__link">Log out</a>
-                 </li> 
-                 <li> 
-                  <a href="/gallery" class="nav__link"><i class="ri-gallery-view-2"></i> My Images</a>
-                 </li>
-                 <li> 
-                  <a href="/upload" class="nav__link"> <i class="ri-user-fill"></i>Upload images </a>
-                 </li>
-                 {% else %}
-                    <li>
+                  <li>
+                     <a href="/pay" class="nav__link">Donate</a>
+                  </li>
+                  {% if user_is_authenticated %}
+                  <li>
+                     <a href="/logout" class="nav__link">Log out</a>
+                  </li> 
+                  <li> 
+                     <a href="/gallery" class="nav__link"><i class="ri-gallery-view-2"></i> My Images</a>
+                  </li>
+                  <li> 
+                     <a href="/upload" class="nav__link"> <i class="ri-user-fill"></i>Upload images </a>
+                  </li>
+                  {% else %}
+                  <li>
                      <a href="/login" class="nav__link">Log In</a>
-                      </li>
-                    <li>
+                  </li>
+                  <li>
                      <a href="/register" class="nav__link">Sign Up</a>
-                    </li>
-                 {% endif %} 
+                  </li>
+                  {% endif %} 
                </ul>
 
                <!-- adding close button -->
-               <div class="nav__close" id="nav-close">
-                  <i class="ri-close-large-fill"></i>
-               </div>
-
+                  <div class="nav__close" id="nav-close">
+                     <i class="ri-close-large-fill"></i>
+                  </div>
             </div>
 
             <!-- toggle button -->
@@ -95,12 +85,12 @@
            <li>
               <p class="footer__link">© 2024 SnapLink</p>
            </li>
-        </ul>
+         </ul>
       </footer>
 
-    <!--=============== MAIN JS ===============-->
-
+      <!--=============== MAIN JS ===============-->
       <script src="{{ url_for('static' ,filename='js/main.js') }}"></script>
+
 </body>
 
 </html>
