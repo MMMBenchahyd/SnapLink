@@ -4,10 +4,11 @@ from db import db
 
 
 class User:
-    def __init__(self, username, password_hash=None, user_id=None):
+    def __init__(self, username, password_hash=None, user_id=None, email = None):
         self.user_id = user_id or str(ObjectId())
         self.username = username
         self.password_hash = password_hash
+        self.email = email
 
     def set_password(self, password: str):
         """ password hash. """
@@ -24,6 +25,7 @@ class User:
         user_data = {
             "user_id": self.user_id,
             "username": self.username,
+            "email": self.email,
             "password_hash": self.password_hash,
         }
         db.users.insert_one(user_data)
@@ -42,12 +44,26 @@ class User:
         return None
     
     @classmethod
-    def find_by_username(cls, username: str):
-        """ find user by username. """
-        user_data = db.users.find_one({"username": username})
+    def find_by_username_or_email(cls, identifier: str):
+        """ find user by username or email. """
+        user_data = db.users.find_one({"$or": [{"username": identifier}, {"email": identifier}]})
         if user_data:
             return cls(
                 username=user_data["username"],
+                email=user_data["email"],
+                password_hash=user_data["password_hash"],
+                user_id=user_data["user_id"],
+            )
+        return None
+    
+    @classmethod
+    def find_by_email(cls, email: str):
+        """ find user by email. """
+        user_data = db.users.find_one({"email": email})
+        if user_data:
+            return cls(
+                username=user_data["username"],
+                email=user_data["email"],
                 password_hash=user_data["password_hash"],
                 user_id=user_data["user_id"],
             )
