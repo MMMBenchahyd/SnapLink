@@ -17,7 +17,11 @@
             <p class="home__description">Effortless image hosting made simple!<br>
                Upload your images, get instant links, and share them anywhere online.<br><br>
 
+               {% if user_is_authenticated %}
+               <a href="/upload" class="home__button">Start Uploading Now</a>
+               {% else %}
                <a href="/login" class="home__button">Start Uploading Now</a>
+               {% endif %}
                <strong><br><br>Why SnapLink?</strong>
 
                <br><i class="ri-timer-flash-line"></i> Fast and reliable hosting

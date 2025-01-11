@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Upload image - SnapLink &copy</title>
+{% endblock %}
+
+{% block body %}
+
+
+
+<main class="main">
+    <!--==================== home : upload page ====================-->
+    <section class="container home__container">
+        <div class="page__data page__border">
+
+            <div class="thumbnail">
+
+                <div class="thumbnail-container">
+                    <div class="lastimage">
+                        {% if images|length > 0 %}
+                        {% set last_image = images[0] %}
+                        <!-- Show thumbnail of the last uploaded image -->
+                        {% if last_image.file_content|length > 0  %}
+                        <img src="/image/{{ last_image.img_id }}" alt="{{ last_image.filename }}" class="image-item" />
+                        {% else %}
+                        <span style="color: red;">No Thumbnail</span>
+                        {% endif %}
+                        {% else %}
+                        <span style="color: red;">No images available</span>
+                        {% endif %}
+                    </div>
+                    <div class="thumbnail-description">
+
+                        {% if images|length > 0 %}
+
+                        {% set last_image = images[0] %}
+                        {% if last_image.file_content|length > 0  %}
+
+                        <p><span>Image Name:</span> {{ last_image.filename }}</p>
+                        <p><span>Creation Date:</span> {{ last_image.date_created.date() }}</p>
+                        <p><span> <a style="color: rgb(125, 0, 81);" href="/update/{{ last_image.img_id }}">Rename
+                                    image</a></span></p>
+                        <p><span> <a style="color: rgb(125, 0, 81);" href="/retrieve/{{ last_image.img_id }}">download
+                                    image</a></span></p>
+                        <p><span> <a style="color: rgb(125, 0, 81);" href="/delete/{{ last_image.img_id }}">delete
+                                    image</a></span></p>
+
+                        {% else %}
+                        <span style="color: red;">No images uploded yet</span>
+                        {% endif %}
+                        {% endif %}
+
+                    </div>
+
+                    <!-- uplod image forme  -->
+
+                    <div id="upload-container">
+                        <!-- Upload form -->
+                        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+                            <label for="content">Filename (optional):</label>
+                            <input type="text" name="content" id="content" placeholder="Enter filename">
+
+
+                            <label for="file" class="custom-file-label" aria-live="polite">Choose Your Image:</label>
+                            <input type="file" name="file" id="file" accept="image/*" required>
+
+                            <div>
+
+                                <button type="button" class="cancel-button" id="cancel-button"
+                                    style="display: none;">Cancel <i class="ri-close-large-line"></i></button>
+
+
+                                <button type="submit">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+                <span> <a href="/"><button id="view-gallery" style="padding: 15px; margin: 30px 30px;"> View  Gallery</button> </a></span>
+                </span>
+                <table>
+                    {% if images %}
+                    <tr>
+                        <td>Direct Link</td>
+                        <td>/image/{{ images[0].img_id }}</td>
+                        <td><button onclick="copyLink('/image/{{ images[0].img_id }}',this)">Copy Link</button></td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Link Markdown</td>
+                        <td>![Image](/image/{{ images[0].img_id }})</td>
+                        <td><button onclick="copyLink('![Image](/image/{{ images[0].img_id }})',this)">Copy
+                                Link</button></td>
+                    </tr>
+                    <tr>
+                        <td>Thumbnail for Website HTML</td>
+                        <td>&lt;img src="/image/{{ images[0].img_id }}" alt="Thumbnail"&gt;</td>
+                        <td><button
+                                onclick="copyLink('&lt;img src=&quot;/image/{{ images[0].img_id }}&quot; alt=&quot;Thumbnail&quot;&gt;',this)">Copy
+                                Link</button></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td>No images available</td>
+                    </tr>
+                    {% endif %}
+                </table>
+    </section>
+
+</main>
+
+
+{% endblock %}
