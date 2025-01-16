@@ -16,8 +16,20 @@ paypalrestsdk.configure({
     "client_secret": "EKtRS0pNR57bF_d_wiblVJdoo0eJYZdOu5u1tGxOhqP2HvZ2gBxEA0YRVAZ_Ha1ZFbICqyRK8aICEh1b"
 })
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/', methods=['GET'])
 def index():
+    if 'user_id' not in session:
+        return redirect('/index')
+
+    user = User.search_id(session['user_id'])
+    if not user:
+        return "User not found", 404
+    else:
+        images = Image.find_by_user(user.user_id)
+        return render_template('gallery.html', images=images, user_is_authenticated=True)
+
+@app.route('/upload', methods=['POST', 'GET'])
+def upload():
     if 'user_id' not in session:
         return redirect('/index')
 
@@ -41,13 +53,13 @@ def index():
             )
             new_img.save()
 
-            return redirect('/')
+            return redirect('/upload')
         except Exception as e:
             return f"Error to adding your image: {e}", 500
 
     else:
         images = Image.find_by_user(user.user_id)
-        return render_template('index.html', images=images, user_is_authenticated=True)
+        return render_template('upload.html', images=images, user_is_authenticated=True)
 
 @app.route('/index')
 def home_page():
@@ -81,7 +93,7 @@ def login():
         user = User.find_by_username_or_email(identifier)
         if user and user.check_password(password):
             session['user_id'] = user.user_id
-            return redirect('/')
+            return redirect('/upload')
         else:
             return "Invalid username/email or password", 401
 
@@ -91,7 +103,7 @@ def login():
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
-    return redirect('/login')
+    return redirect('/index')
 
 
 @app.route('/update/<string:id>', methods=['POST', 'GET'])
@@ -117,15 +129,15 @@ def update(id):
     return render_template('update.html', image=img_update)
 
 
-@app.route('/delete/<string:id>')
+@app.route('/delete/<string:id>', methods=['GET'])
 def delete(id):
     try:
-        object_id = ObjectId(id)
-        img_deleting = db.images.find_one({"_id": object_id})
+        object_id = str(ObjectId(id))
+        img_deleting = db.images.find_one({"img_id": object_id})
         if not img_deleting:
             return "Image not found.", 404
         # Delete img
-        db.images.delete_one({"_id": object_id})
+        db.images.delete_one({"img_id": object_id})
         return redirect('/')
     except Exception as e:
         print(f"Error: {e}")
@@ -153,6 +165,9 @@ def pay():
         "redirect_urls": {
             "return_url": url_for('payment_success', _external=True),
             "cancel_url": url_for('payment_cancel', _external=True)
+        },
+        "application_context": {
+            "brand_name": "SnapLink",
         },
         "transactions": [{
             "item_list": {
@@ -189,13 +204,13 @@ def payment_success():
     payment = paypalrestsdk.Payment.find(payment_id)
 
     if payment.execute({"payer_id": payer_id}):
-        return "Payment successful!"
+        return render_template('payment_success.html')
     else:
         return f"Payment failed: {payment.error}"
 
 @app.route('/payment_cancel')
 def payment_cancel():
-    return "Payment canceled."
+    return  render_template('payment_cancel.html')
 
 
 @app.route('/retrieve/<string:img_id>')
