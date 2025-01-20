@@ -99,21 +99,24 @@ document.getElementById('file').addEventListener('change', function() {
     /**============= code for copy link ==================*/
        // function to copying the link to clipboard
  
-       function openPopup(imageSrc, imgId) {
-        if (!imgId) {
-            console.error("Image ID is undefined. Please ensure it is passed correctly.");
-            return;
-        }
-    
+    function openPopup(imageSrc, imgId, imageName, creationDate) {
         const popup = document.getElementById('image-popup');
         const popupImage = document.getElementById('popup-image');
+        const detailContainer = document.querySelector('.thumbnail-description');
         const tableBody = document.querySelector('.popup-table tbody');
     
-        // update the popup image
+    
+        // Update the popup image
         popupImage.src = imageSrc;
     
-        // updating the links table dynamically based on the 
-        // clicked image by using its  imgId
+        // Update the details near the image
+        detailContainer.innerHTML = `
+            <p><span>Image Name:</span> ${imageName || 'Unknown'}</p>
+            <p><span>Creation Date:</span> ${creationDate || 'Unknown'}</p>
+            <p><span><a style="color: rgb(125, 0, 81);" href="/update/${imgId}">Rename image</a></span></p>
+            <p><span><a style="color: rgb(125, 0, 81);" href="/retrieve/${imgId}">Download image</a></span></p>
+            <p><span><a style="color: rgb(125, 0, 81);" href="/delete/${imgId}">Delete image</a></span></p>
+        `;
         tableBody.innerHTML = `
             <tr>
                 <td>Direct Link</td>
@@ -138,9 +141,10 @@ document.getElementById('file').addEventListener('change', function() {
             </tr>
         `;
     
-        // Display the popup
+        // Show the popup
         popup.style.display = 'flex';
     }
+    
      //Popup box close button
     function closePopup() {
         const popup = document.getElementById('image-popup');

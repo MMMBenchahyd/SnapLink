@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Gallery - SnapLink &copy</title>
+{% endblock %}
+
+{% block body %}
+
+
+
+<main class="main">
+    <!--==================== home ====================-->
+    <section class="container home__container">
+        <div class="page__data page__border">
+            <!-- user gallery image listing -->
+
+            <div class="gallery-container">
+                <div class="page__title"> <strong> Image Gallery </strong></div>
+                {% if images|length > 0 %}
+                <div class="image-list">
+                    {% for image in images %}
+                    {% if image.file_content|length > 0 %}
+                    <div class="image-item">
+                        <!-- Pass img_id explicitly to the popup box -->
+                        <img src="/image/{{ image.img_id }}" alt="{{ image.filename }}" class="thumbnail"
+                            onclick="openPopup('/image/{{ image.img_id }}', '{{ image.img_id }}', '{{ image.filename }}', '{{ image.date_created }}')" />
+                    </div>
+
+                    {% else %}
+                    <div class="no-thumbnail">
+                        <span>No Thumbnail</span>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="no-images">
+                    <span>No images available</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- this is the part of code for the popup box by clicked image  -->
+            <div id="image-popup" class="popup">
+
+                <div class="popup-content">
+                    <i class="close-btn" onclick="closePopup()"> Close <i class="ri-close-large-fill"></i></i>
+                    <div class="popup-body">
+                        <!-- Image Section -->
+                        <div class="popup-image">
+                            <div class="thumbnail-container">
+                                <img id="popup-image" src="" alt="Popup Image">
+                                <div class="thumbnail-description">
+                                    <p><span>Image Name:</span> example.jpg</p>
+                                    <p><span>Creation Date:</span> 2025-01-06</p>
+                                    <p><span> <i class="ri-spam-2-line"></i> update:</span> JEPG</p>
+                                    <p><span> <i class="ri-spam-2-line"></i> download:</span> JPEG</p>
+                                    <p><span> <i class="ri-spam-2-line"></i> delete:</span> JPEG</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Table Section -->
+                        <div class="popup-table thumbnail-container">
+                            <table>
+                            <!--
+                            <thead>
+                            <tr>
+                                <th>Link Name</th>
+                                <th>Link Text</th>
+                                <th>Copy Link</th>
+                            </tr>
+                            </thead>  optional: removed for best ui  
+                            -->
+                                <tbody>
+                                    <!-- dynamic java scriptt rows inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+
+</main>
+
+
+{% endblock %}
