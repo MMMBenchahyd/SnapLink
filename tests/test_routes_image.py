@@ -31,5 +31,18 @@ class TestImageRoutes(unittest.TestCase):
                     )
                     self.assertEqual(response.status_code, 302)
     
+    def test_update_image(self):
+        """Test image update"""
+        img_id = str(ObjectId())
+        with patch('models.image.Image.find_by_img_id') as mock_find:
+            mock_image = Mock()
+            mock_image.img_id = img_id
+            mock_find.return_value = mock_image
+            
+            response = self.client.post(f'/update/{img_id}',
+                data={'newname': 'updated.png'}
+            )
+            self.assertEqual(response.status_code, 302)
+    
 if __name__ == '__main__':
     unittest.main()
