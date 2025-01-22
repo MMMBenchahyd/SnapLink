@@ -1,14 +1,25 @@
 from bson import ObjectId
 import bcrypt
 from db import db
+from itsdangerous import URLSafeTimedSerializer
+from flask import current_app
 
 
 class User:
-    def __init__(self, username, password_hash=None, user_id=None, email = None):
+    def __init__(self, username, password_hash=None, user_id=None, email = None, verified=False):
         self.user_id = user_id or str(ObjectId())
         self.username = username
         self.password_hash = password_hash
         self.email = email
+        self.verified = verified
+
+    def generate_verification_token(self):
+        serializer = URLSafeTimedSerializer(current_app.secret_key)
+        return serializer.dumps(self.email, salt='email-verify')
+
+    def generate_password_reset_token(self):
+        serializer = URLSafeTimedSerializer(current_app.secret_key)
+        return serializer.dumps(self.email, salt='password-reset')
 
     def set_password(self, password: str):
         """ password hash. """
@@ -27,8 +38,27 @@ class User:
             "username": self.username,
             "email": self.email,
             "password_hash": self.password_hash,
+            "verified": self.verified,
         }
         db.users.insert_one(user_data)
+
+    @staticmethod
+    def verify_password_reset_token(token, expiration=3600):
+        serializer = URLSafeTimedSerializer(current_app.secret_key)
+        try:
+            email = serializer.loads(token, salt='password-reset', max_age=expiration)
+        except:
+            return None
+        return email
+
+    @staticmethod
+    def verify_token(token, expiration=3600):
+        serializer = URLSafeTimedSerializer(current_app.secret_key)
+        try:
+            email = serializer.loads(token, salt='email-verify', max_age=expiration)
+        except:
+            return None
+        return email
 
 
     @classmethod
