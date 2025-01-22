@@ -70,6 +70,7 @@ class User:
                 user_id=user_data["user_id"],
                 username=user_data["username"],
                 password_hash=user_data["password_hash"],
+                verified=user_data["verified"],
             )
         return None
     
@@ -83,6 +84,7 @@ class User:
                 email=user_data["email"],
                 password_hash=user_data["password_hash"],
                 user_id=user_data["user_id"],
+                verified=user_data["verified"],
             )
         return None
     
@@ -96,5 +98,6 @@ class User:
                 email=user_data["email"],
                 password_hash=user_data["password_hash"],
                 user_id=user_data["user_id"],
+                verified=user_data["verified"],
             )
         return None
