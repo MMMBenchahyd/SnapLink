@@ -120,23 +120,23 @@ document.getElementById('file').addEventListener('change', function() {
         tableBody.innerHTML = `
             <tr>
                 <td>Direct Link</td>
-                <td>/image/${imgId}</td>
+                <td>snap-link.site/image/${imgId}</td>
                 <td>
-                    <button onclick="copyLink('/image/${imgId}', this)">copy</button>
+                    <button onclick="copyLink('snap-link.site/image/${imgId}', this)">copy</button>
                 </td>
             </tr>
             <tr>
                 <td>GitHub Markdown</td>
-                <td>![Image](/image/${imgId})</td>
+                <td>![Image](snap-link.site/image/${imgId})</td>
                 <td>
-                    <button onclick="copyLink('![Image](/image/${imgId})', this)">copy</button>
+                    <button onclick="copyLink('![Image](snap-link.site/image/${imgId})', this)">copy</button>
                 </td>
             </tr>
             <tr>
                 <td>Thumbnail for Website</td>
-                <td>&lt;img src="/image/${imgId}" alt="Thumbnail"&gt;</td>
+                <td>&lt;img src="snap-link.site/image/${imgId}" alt="Thumbnail"&gt;</td>
                 <td>
-                    <button onclick="copyLink('&lt;img src=&quot;/image/${imgId}&quot; alt=&quot;Thumbnail&quot;&gt;', this)">copy</button>
+                    <button onclick="copyLink('&lt;img src=&quot;snap-link.site/image/${imgId}&quot; alt=&quot;Thumbnail&quot;&gt;', this)">copy</button>
                 </td>
             </tr>
         `;

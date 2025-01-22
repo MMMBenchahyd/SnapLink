@@ -84,20 +84,20 @@
                     {% if images %}
                     <tr>
                         <td>Direct Link</td>
-                        <td>/image/{{ images[0].img_id }}</td>
-                        <td><button onclick="copyLink('/image/{{ images[0].img_id }}',this)">Copy Link</button></td>
+                        <td>snap-link.site/image/{{ images[0].img_id }}</td>
+                        <td><button onclick="copyLink('snap-link.site/image/{{ images[0].img_id }}',this)">Copy Link</button></td>
                     </tr>
                     <tr>
                         <td>GitHub Link Markdown</td>
-                        <td>![Image](/image/{{ images[0].img_id }})</td>
-                        <td><button onclick="copyLink('![Image](/image/{{ images[0].img_id }})',this)">Copy
+                        <td>![Image](snap-link.site/image/{{ images[0].img_id }})</td>
+                        <td><button onclick="copyLink('![Image](snap-link.site/image/{{ images[0].img_id }})',this)">Copy
                                 Link</button></td>
                     </tr>
                     <tr>
                         <td>Thumbnail for Website HTML</td>
-                        <td>&lt;img src="/image/{{ images[0].img_id }}" alt="Thumbnail"&gt;</td>
+                        <td>&lt;img src="snap-link.site/image/{{ images[0].img_id }}" alt="Thumbnail"&gt;</td>
                         <td><button
-                                onclick="copyLink('&lt;img src=&quot;/image/{{ images[0].img_id }}&quot; alt=&quot;Thumbnail&quot;&gt;',this)">Copy
+                                onclick="copyLink('&lt;img src=&quot;snap-link.site/image/{{ images[0].img_id }}&quot; alt=&quot;Thumbnail&quot;&gt;',this)">Copy
                                 Link</button></td>
                     </tr>
                     {% else %}
