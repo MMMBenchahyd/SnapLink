@@ -30,3 +30,12 @@ class TestPaymentRoutes(unittest.TestCase):
         response = self.client.get('/payment_success?paymentId=test&PayerID=test')
         self.assertEqual(response.status_code, 200)
         self.assertIn("Payment successful!", response.get_data(as_text=True))
+
+    def test_payment_cancel(self):
+        """Test payment cancellation"""
+        response = self.client.get('/payment_cancel')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Payment canceled.", response.get_data(as_text=True))
+
+if __name__ == '__main__':
+    unittest.main()
