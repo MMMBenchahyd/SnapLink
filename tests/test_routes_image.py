@@ -44,5 +44,17 @@ class TestImageRoutes(unittest.TestCase):
             )
             self.assertEqual(response.status_code, 302)
     
+    def test_get_image(self):
+        """Test retrieving an image"""
+        img_id = str(ObjectId())
+        with patch('models.image.Image.find_by_img_id') as mock_find:
+            mock_image = Mock()
+            mock_image.file_content = b"test content"
+            mock_find.return_value = mock_image
+            
+            response = self.client.get(f'/image/{img_id}')
+            self.assertEqual(response.status_code, 200)
+            self.assertEqual(response.data, b"test content")
+
 if __name__ == '__main__':
     unittest.main()
