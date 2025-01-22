@@ -19,3 +19,14 @@ class TestPaymentRoutes(unittest.TestCase):
 
         response = self.client.get('/pay')
         self.assertEqual(response.status_code, 302)
+
+    @patch('paypalrestsdk.Payment.find')
+    def test_payment_success(self, mock_payment_find):
+        """Test successful payment execution"""
+        mock_payment = Mock()
+        mock_payment.execute.return_value = True
+        mock_payment_find.return_value = mock_payment
+
+        response = self.client.get('/payment_success?paymentId=test&PayerID=test')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("Payment successful!", response.get_data(as_text=True))
