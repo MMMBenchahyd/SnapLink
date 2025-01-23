@@ -5,15 +5,29 @@ from db import db
 from bson import ObjectId
 import paypalrestsdk
 from io import BytesIO
+from flask_mail import Mail, Message
+import os
 
 
 app = Flask(__name__)
-app.secret_key = "111"
+app.secret_key = os.environ.get('SERCET_KEY')
+
+server_name = os.environ.get('SERVER_NAME_YN')
+mail_username = os.environ.get('MAIL_USERNAME_YN')
+mail_password = os.environ.get('MAIL_PASSWORD_YN')
+
+app.config['MAIL_SERVER'] = server_name
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = mail_username
+app.config['MAIL_PASSWORD'] = mail_password
+
+mail = Mail(app)
 
 paypalrestsdk.configure({
     "mode": "sandbox",
-    "client_id": "AQorRJu7Scrg_QGT1jcX4JSiWl2-PEH1DPnWpA8C1vNublhXlHsr3GUzIMsEsXS0JzycOTnVtxvenwcL",
-    "client_secret": "EKtRS0pNR57bF_d_wiblVJdoo0eJYZdOu5u1tGxOhqP2HvZ2gBxEA0YRVAZ_Ha1ZFbICqyRK8aICEh1b"
+    "client_id": os.environ.get('CLIENT_ID'),
+    "client_secret": os.environ.get('CLIENT_SECRET')
 })
 
 @app.route('/', methods=['GET'])
@@ -23,10 +37,43 @@ def index():
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
+    if not user.verified :
+        return "Please verify your email.", 403
     else:
         images = Image.find_by_user(user.user_id)
         return render_template('gallery.html', images=images, user_is_authenticated=True)
+
+@app.route('/send_verification_email', methods=['GET'])
+def send_verification_email():
+    if 'user_id' not in session:
+        return redirect('/index')
+
+    user = User.search_id(session['user_id'])
+    if not user:
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
+
+    token = user.generate_verification_token()
+    msg = Message('Verify Your Email', sender='snap.link@yandex.com', recipients=[user.email])
+    link = url_for('verify_email', token=token, _external=True)
+    msg.body = f'Click the link to verify your email: {link}'
+    mail.send(msg)
+
+    return "Verification email sent. Check your email"
+
+@app.route('/verify_email/<token>')
+def verify_email(token):
+    email = User.verify_token(token)
+    if email is None:
+        return "Invalid or expired token. <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 400
+
+    user = User.find_by_email(email)
+    if user:
+        user.verified = True
+        db.users.update_one({"user_id": user.user_id}, {"$set": {"verified": True}})
+        return "Email verified successfully. <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>"
+    else:
+        return "User not found.", 404
 
 @app.route('/upload', methods=['POST', 'GET'])
 def upload():
@@ -35,7 +82,7 @@ def upload():
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
 
     if request.method == 'POST':
         try:
@@ -79,9 +126,51 @@ def register():
         new_user = User(username=username, email=email)
         new_user.set_password(password)
         new_user.save()
+
+        #verify_email
+        token = new_user.generate_verification_token()
+        msg = Message('Verify Your Email', sender='snap.link@yandex.com', recipients=[new_user.email])
+        link = url_for('verify_email', token=token, _external=True)
+        msg.body = f'Click the link to verify your email: {link}'
+        mail.send(msg)
         return redirect('/login')
 
     return render_template('register.html')
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        user = User.find_by_email(email)
+        if user:
+            token = user.generate_password_reset_token()
+            msg = Message('Reset Your Password', sender='snap.link@yandex.com', recipients=[user.email])
+            link = url_for('reset_password', token=token, _external=True)
+            msg.body = f'Click the link to reset your password: {link}'
+            mail.send(msg)
+            return "Password reset email sent."
+        else:
+            return "Email not found.", 404
+
+    return render_template('forgot_password.html')
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    email = User.verify_password_reset_token(token)
+    if email is None:
+        return "Invalid or expired token.", 400
+
+    user = User.find_by_email(email)
+    if not user:
+        return "User not found. <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
+
+    if request.method == 'POST':
+        new_password = request.form['new_password']
+        user.set_password(new_password)
+        db.users.update_one({"user_id": user.user_id}, {"$set": {"password_hash": user.password_hash}})
+        return "Password reset successfully."
+
+    return render_template('reset_password.html', token=token)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -99,7 +188,6 @@ def login():
 
     return render_template('login.html')
 
-
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
@@ -108,6 +196,14 @@ def logout():
 
 @app.route('/update/<string:id>', methods=['POST', 'GET'])
 def update(id):
+    if 'user_id' not in session:
+        return redirect('/index')
+
+    user = User.search_id(session['user_id'])
+    if not user:
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
+    if not user.verified :
+        return "Please verify your email.", 403
     try:
         img_update = Image.find_by_img_id(id)# search image by id
         if not img_update:
@@ -131,6 +227,14 @@ def update(id):
 
 @app.route('/delete/<string:id>', methods=['GET'])
 def delete(id):
+    if 'user_id' not in session:
+        return redirect('/index')
+
+    user = User.search_id(session['user_id'])
+    if not user:
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
+    if not user.verified :
+        return "Please verify your email.", 403
     try:
         object_id = str(ObjectId(id))
         img_deleting = db.images.find_one({"img_id": object_id})
@@ -149,7 +253,7 @@ def get_image(img_id):
     try:
         img = Image.find_by_img_id(img_id)
         if not img or not img.file_content:
-            return "Image not found", 404
+            return "Image not found <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
 
         return Response(img.file_content, mimetype='image/png')
     except Exception as e:
@@ -228,7 +332,20 @@ def retrieve(img_id):
         )
     except Exception as e:
         return f"Error retrieving image: {e}", 500
+@app.route('/contact')
+def contact():
+    return  render_template('contact.html')
 
+@app.route('/about')
+def about():
+    return  render_template('about.html')
+
+@app.route('/terms')
+def terms():
+    return  render_template('terms.html')
+@app.route('/privacy')
+def privacy():
+    return  render_template('privacy.html')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=5000)

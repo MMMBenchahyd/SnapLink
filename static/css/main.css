@@ -62,6 +62,7 @@ a {
 .container {
   max-width: 1120px;
   margin-inline: 1.5rem;
+  
 }
 
 .main {
@@ -208,12 +209,16 @@ a {
   font-weight: var(--font-semi-bold);
   border-radius: .5rem;
   border: 3px  solid var(--black-color);  
+  margin-top: 6rem;
+  
 }
 .page__data{
-  padding: 2rem 2rem 2rem 2rem; 
   position: relative;
   text-align: justify;
   z-index: var(--z-tooltip);
+  padding: 2rem 2rem 2rem 2rem;
+  
+
 }
 
 /*=============== adding a dynamic image =====  ==========*/
@@ -279,6 +284,42 @@ form {
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+}
+ /* form select and textarea and  related focus classes are added for the contact form styling*/
+.form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid hsl(214, 32%, 91%);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-select:focus {
+  outline: none;
+  border-color: var(--black-color);
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid hsl(214, 32%, 91%);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  resize: vertical; /* for resizing vertically for better user experience */
+  transition: border-color 0.3s ease;
+}
+
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--black-color);
+}
+/*validationn erorr message check*/
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none; /* its hided initially */
 }
 
 label {
@@ -595,7 +636,8 @@ button:hover {
 /* For small devices */
 @media screen and (max-width: 350px){
   .container{
-    margin-inline: auto;/*in testing phase : had star kant 1rem raj3tha auto */
+    margin-inline: 1rem;/*in testing phase : had star kant 1rem raj3tha auto */
+    margin-right: 1rem;
     height: auto;/*in testing phase : had star  makantch hta dert height auto lta7t*/
     
   }
@@ -647,7 +689,7 @@ button:hover {
   }
   .home__description{
     font-size: 1.5rem;
-    padding-right: 8rem;
+    padding-right: 1rem;
     padding-bottom: 3rem;
   }
 
