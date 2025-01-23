@@ -11,7 +11,7 @@
 <main class="main">
    <!--============ home page for snap link home page   ==============-->
    <section class="home">
-      <div class="home__container container">
+      <div class="container home__container">
          <div class="home__data">
             <h1 class="home__title">Welcome to<br> <i class="ri-share-box-line"></i> SanpLink</h1>
             <p class="home__description">Effortless image hosting made simple!<br>
@@ -20,7 +20,7 @@
                {% if user_is_authenticated %}
                <a href="/upload" class="home__button">Start Uploading Now</a>
                {% else %}
-               <a href="/login" class="home__button">Start Uploading Now</a>
+               <a href="/login" class="home__button">Create Account Now</a>
                {% endif %}
                <strong><br><br>Why SnapLink?</strong>
 

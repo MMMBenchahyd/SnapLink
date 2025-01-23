@@ -332,7 +332,20 @@ def retrieve(img_id):
         )
     except Exception as e:
         return f"Error retrieving image: {e}", 500
+@app.route('/contact')
+def contact():
+    return  render_template('contact.html')
 
+@app.route('/about')
+def about():
+    return  render_template('about.html')
+
+@app.route('/terms')
+def terms():
+    return  render_template('terms.html')
+@app.route('/privacy')
+def privacy():
+    return  render_template('privacy.html')
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=500)
+    app.run(debug=True, host="0.0.0.0", port=5000)

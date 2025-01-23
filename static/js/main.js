@@ -166,3 +166,40 @@ document.getElementById('file').addEventListener('change', function() {
         }, 1500); // 1.5s delays
     }
     
+
+
+    //################ validation for forms inputs(email passsword or usernam...)###
+    window.getElementById('contactForm').addEventListener('submit', function(event) {
+        let isValid = true;
+
+        // 1. Validate Username / Name (at least 4 characters)
+        const nameInput = document.getElementById('username');
+        if (nameInput.value.length < 4) {
+            alert('Name/Username must be at least 4 characters long.');
+            isValid = false;
+        }
+
+        // 2. Validate Email (valid email format)
+        const emailInput = document.getElementById('email');
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(emailInput.value)) {
+            alert('Please enter a valid email address (e.g., example@domain.com).');
+            isValid = false;
+        }
+
+        // 3. Validate Password (at least 8 characters, including lowercase, uppercase, number, and special character)
+        const passwordInput = document.getElementById('password');
+        const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        if (!passwordPattern.test(passwordInput.value)) {
+            alert('Password must be at least 8 characters long, with at least one uppercase letter, one lowercase letter, one number, and one special character.');
+            isValid = false;
+        }
+
+        // If any validation fails, prevent form submission
+        if (!isValid) {
+            event.preventDefault();
+        }
+    }); 
+
+
+
