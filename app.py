@@ -37,7 +37,7 @@ def index():
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
     if not user.verified :
         return "Please verify your email.", 403
     else:
@@ -51,7 +51,7 @@ def send_verification_email():
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
 
     token = user.generate_verification_token()
     msg = Message('Verify Your Email', sender='snap.link@yandex.com', recipients=[user.email])
@@ -65,13 +65,13 @@ def send_verification_email():
 def verify_email(token):
     email = User.verify_token(token)
     if email is None:
-        return "Invalid or expired token.", 400
+        return "Invalid or expired token. <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 400
 
     user = User.find_by_email(email)
     if user:
         user.verified = True
         db.users.update_one({"user_id": user.user_id}, {"$set": {"verified": True}})
-        return "Email verified successfully."
+        return "Email verified successfully. <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>"
     else:
         return "User not found.", 404
 
@@ -82,7 +82,7 @@ def upload():
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
 
     if request.method == 'POST':
         try:
@@ -162,7 +162,7 @@ def reset_password(token):
 
     user = User.find_by_email(email)
     if not user:
-        return "User not found.", 404
+        return "User not found. <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
 
     if request.method == 'POST':
         new_password = request.form['new_password']
@@ -201,7 +201,7 @@ def update(id):
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
     if not user.verified :
         return "Please verify your email.", 403
     try:
@@ -232,7 +232,7 @@ def delete(id):
 
     user = User.search_id(session['user_id'])
     if not user:
-        return "User not found", 404
+        return "User not found  <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
     if not user.verified :
         return "Please verify your email.", 403
     try:
@@ -253,7 +253,7 @@ def get_image(img_id):
     try:
         img = Image.find_by_img_id(img_id)
         if not img or not img.file_content:
-            return "Image not found", 404
+            return "Image not found <a href=\"/login\" style=\"color: hsl(323, 100%, 50%);\">Click here</a>", 404
 
         return Response(img.file_content, mimetype='image/png')
     except Exception as e:
