@@ -1,95 +1,226 @@
+<h1 align="center">Welcome Everyone!!</h1>
 
-# SnapLink
+# Thi is our Graduation Portfolio Project - ALX SWE Program
 
-## What is SnapLink?
+# SnapLink: Image Hosting Website: Turn Your Images Into Instant Link.
 
-**SnapLink** is an intuitive and user-friendly platform designed to make image hosting effortless. Whether you're a content creator, a blogger, or someone who needs to share visuals online quickly, SnapLink has you covered.
+## Live Website Demo https://snap-link.site
 
-*Key Features*:
+<a href="https://www.youtube.com/watch?v=w_dil0uYST8" target="blank">
+   <p align="center">Watch Our Website Live Demonstration </p>
+   <p align="center">
+      <img src="https://i.postimg.cc/xTc828LT/snaplink-home.png" style="width:70%; height:70%; display: block; margin: auto;"  target="blank" alt="SnapLinkImageDemo" />
+   </p>
+</a>
 
-- Instant Image Upload: Upload images in seconds with no hassle.
-- Shareable Links: Generate shareable links instantly to post your images anywhere online.
-- Broad Accessibility: Ideal for individuals and professionals looking for a fast, reliable image-hosting solution.
-With SnapLink, sharing your visuals is as simple as a click.
+## Google Slides Presentation
+<p align="center"> <strong>See Our Portfolio Project Slides Presentation</strong></p>
 
+<a href="https://docs.google.com/presentation/d/1jCl3qBBTht1y3l57cOa7dXeyZpLPgDvI/" target="blank">
+   <p align="center"> <strong>Click Here or on the image below</strong></p>
+   <p align="center">
+   <img src="https://i.postimg.cc/Vk35kwzQ/Snap-Link-Slide.jpg" style="max-width:70%;height:70%; display: block; margin: auto;"  alt="snap-link.site" />
+   </p>
+</a>
+
+
+# Welcome Agian Welcome to SnapLink
+
+## About SnapLink
+
+Your Image Hosting Website designed to simplify Sharing images by providing direct links.
+
+## Why SnapLink?
+
+- Sharing images by providing direct links, eliminating the need for repeated uploads and downloads.
+
+- Reusing the same image across multiple projects seamlessly.
+
+- SnapLink is a platform designed to simplify:  Sharing image links directly without worrying about file transfers.
+
+## Project Objective
+
+Our team decided to build a web app to address a real-life challenge and make sharing images more efficient.
+
+# Development Team and Responsibilities
+
+## **Mhammed benchahyd** (Full-Stack Developer)
+- [LinkdIn](https://www.linkedin.com/in/mhammed-benchahyd-aa1198281/)
+- [X (Twitter)](https://www.x.com/SEMhammedBen)
+- [Github](https://github.com/MMMbenchahyd)
+  
+*Role:* Full-Stack Developer (Focusing on Backend Development)
+
+**Field of tasks:**
+- Setup and configuration of web servers using NGINX/Gunicorn.
+- model updates.
+- Creation admin panel with CRUD functionality.
+- Implementation API functionalities
+- developing both frontend and backend.
+- Domain/SSL setup.
+
+## **El mostafa el bahtouri** (Full-Stack Developer)
+- [LinkdIn](https://www.linkedin.com/in/mastax/)
+- [X (Twitter)](https://www.x.com/ElbahtouriM)
+- [Github](https://www.github.com/mastax/)
+  
+*Role:* Full-Stack Developer (Focusing on Backend Development)
+
+**Field of tasks:**
+- Utilized Unittest.
+- Responsible for testing, ensuring an optimal user experience.
+- Code Management(branching).
+- Contributed to the data models.
+- Repository management.
+- Servers management.
+
+## **Zakaria moukrim** (Full-Stack Developer)
+- [LinkdIn](https://www.linkedin.com/in/moukrim-zakaria/)
+- [X (Twitter)](https://www.x.com/zakaria_moukrim)
+- [Github](https://www.github.com/zakariiia)
+  
+*Role:* Full-Stack Developer (Focusing on Backend Development)
+
+**Field of tasks:**
+- Design the logo, selected colors, and designed all pages.
+- SMTP management.
+- Development of various API endpoints.
+- Data model updates.
+- Domain management.
+- UX handling.
+
+
+## **Younesse haouas** (Full-Stack Developer)
+- [LinkdIn](https://www.linkedin.com/in/younesse-haouas-96973a188)
+- [X (Twitter)](https://www.x.com/HaouasYounesse)
+- [Github](https://github.com/YOUNESSE25)
+  
+*Role:* Full-Stack Developer (Focusing on Backend Development)
+
+**Field of tasks:**
+- Preparing initial project files
+- Backend development using Flask, and MongoDB.
+- Implementation of authentication bcrypt.
+- Creating project architecture.
+- Integration payment processing (PayPal SandBox).
+
+
+# Technologies Used
+
+## Back-End
+- **Flask**
+- **Mongodb**
+- **Autantication with bcrypt**
+
+
+
+## Web-server
+- **Load Balancer**
+- **Application Servers (2 instances)**
+- **MongoDB Database Server**
+- **Firewall Configuration**
+- **ssl certificate**
+
+
+
+## Front-End
+- **Jinja2**
+- **JavaScript**
+- **AJAX**
+- **CSS**
+- **HTML**
+- **Google Fonts**
 
 
 ## Installation
 
-Follow these steps to set up the project locally:
+Follow these steps to set up SnapLink locally on your machine:
+
+1. **Clone the Repository:**
+   - Open your terminal and run:
+   ```bash
+      git clone https://github.com/MMMBenchahyd/SnapLink.git ~/SnapLink/
+   ```
+
+2. **Installing venv:**
+   ```bash
+      sudo apt update
+      sudo apt install python3-venv
+   ```
+
+3. **Create a Virtual Environment:**
+   - Navigate to your project directory:
+   ```bash
+      cd /path/to/your/project
+   ```
+   - Then create a virtual environment:
+   ```bash
+      python3 -m venv SnapLink
+   ```
+
+4. **Activate the Virtual Environment:**
+   ```bash
+      source venv/bin/activate
+   ```
+5. **Installing MongoDB:**
+   - Install MongoDB ,Start and enable the service.
+
+6. **Install Dependencies:**
+   ```bash
+      pip install -r requirements.txt
+   ```
+
+7. **Set Environment Variables:**
+   ```bash
+      export SERVER_NAME="YOUR_SERVER_NAME"
+      export MAIL_USERNAME="YOUR_EMAIL_USERNAME"
+      export MAIL_PASSWORD="YOUR_EMAIL_PASSWORD"
+      export SERVER_NAME="YOUR_YANDEX_SERVER_NAME"
+      export MAIL_USERNAME="YOUR_YANDEX_EMAIL_USERNAME"
+      export MAIL_PASSWORD="YOUR_YANDEX_EMAIL_PASSWORD"
+      export SERCET_KEY="YOUR_SECRET_KEY"
+      export CLIENT_ID="YOUR_PAYPAL_CLIENT_ID"
+      export CLIENT_SECRET="YOUR_PAYPAL_CLIENT_SECRET"
+   ```
+
+8. **Run the App:**
+   ```bash
+      python3 app.py
+   ```
+
+9. **Access the App:**
+   ```bash
+      http://127.0.0.1:5000
+   ```
 
 
-#### Clone the Repository
+## Usage
 
-```bash
-git clone https://github.com/MMMBenchahyd/SnapLink.git
-cd SnapLink
-```
+SnapLink, your platform for sharing images! Follow these simple steps to get started:
 
-#### Set Up a Virtual Environment :
+1. **Sign Up:**
+   - New to SnapLink? Sign up by providing your details to create an account. 
 
-Create a virtual environment to isolate project dependencies:
-```bash
-python3 -m venv venv
-```
+2. **Log In**
+   - Log in to your account to unlock all the platform’s features.
 
-#### Activate the Virtual Environment
+3. **Upload an Image**
+   - Go to the Upload Image page, Choose an image from your device and optionally give it a name before uploading it.
 
-On macOS/Linux:
+4. **Manage Your Images:**
+   - Visit the My Images section to view and manage all your uploads. You can:
+         -- Update Image Name: Keep your image library organized by editing the names.
+         -- Download Image: Save a copy of your image to your device.
+         -- Delete Image: Permanently remove any image from your library.
 
-```bash
-source venv/bin/activate
-```
+5. **Share Your Images:**
+   - Every uploaded image comes with a unique link. Share this link to let others view or use the image in their own projects.
 
-On Windows:
-```bash
-.\venv\Scripts\activate
-```
-#### Install Required Dependencies
-Install the necessary Python libraries:
-```bash
-pip install flask bson bcrypt pymongo
-```
+6. **Support the Platform:**
+   - Head to the Donate section to contribute and help us keep improving SnapLink. Start uploading, managing, and sharing your images with ease on SnapLink!
 
-#### Install Testing Tools
-If you're running tests, ensure unittest.mock is installed (built into Python 3):
-```bash
-# No separate installation needed, but ensure Python 3.x is used.
-```
+Experience the joy of sharing image instantly just with a unique link!
 
-## Usage  
-After setting up the project, you can run the application locally: 
-```bash
-flask run
-```
-Open your browser and navigate to http://127.0.0.1:5000 to use SnapLink.
 
-## Features  
-
-- **Secure Image Hosting:** All uploaded images are securely stored.  
-- **Real-Time Link Generation:** Instantly generate shareable links for your images.  
-- **Responsive Design:** SnapLink works seamlessly across devices, including mobile.  
-- **Testing Environment:** Includes built-in unit tests for robust functionality.  
-
-## Acknowledgements  
-
-#### Frameworks & Libraries  
-- [Flask](https://flask.palletsprojects.com/en/stable/)  
-- [Pymongo](https://pymongo.readthedocs.io/en/stable/)  
-
-#### Tools  
-- [BCrypt](https://www.npmjs.com/package/bcrypt)  
-- [Bson](https://quickref.me/json.html)  
-
-#### Resources  
-- [HTML Cheatsheet](https://htmlcheatsheet.com/)  
-- [CSS Cheatsheet](https://htmlcheatsheet.com/css/)  
-- [JavaScript Cheatsheet](https://htmlcheatsheet.com/js/)  
-- [AWS Cheat Sheet](https://digitalcloud.training/aws-cheat-sheets/)  
-
-## Contributing
-
-- [@MMMBenchahyd](https://github.com/MMMBenchahyd)
-- [@YOUNESSE25](https://github.com/YOUNESSE25)
-- [@zakariiia](https://github.com/zakariiia)
-- [@mastax](https://github.com/mastax)
+## Deployment
+Our Website is deployed at : [SnapLink](http://snap-link.site/)
