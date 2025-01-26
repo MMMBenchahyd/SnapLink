@@ -130,7 +130,7 @@ def upload():
 
 @app.route('/api/update/<string:img_id>', methods=['POST', 'GET'])
 def update(img_id):
-    # print("Session data:", session)  # Check session data
+    # print("Session data:", session)  # Check_session_data
     if 'user_id' not in session:
         return error_response("Unauthorized", 401)
 
