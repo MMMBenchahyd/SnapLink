@@ -160,7 +160,7 @@ Follow these steps to set up SnapLink locally on your machine:
 
 4. **Activate the Virtual Environment:**
    ```bash
-      source venv/bin/activate
+      source SnapLink/bin/activate
    ```
 5. **Installing MongoDB:**
    - Install MongoDB ,Start and enable the service.
@@ -172,12 +172,9 @@ Follow these steps to set up SnapLink locally on your machine:
 
 7. **Set Environment Variables:**
    ```bash
-      export SERVER_NAME="YOUR_SERVER_NAME"
+      export SERVER_NAME="SMTP_SERVER"
       export MAIL_USERNAME="YOUR_EMAIL_USERNAME"
       export MAIL_PASSWORD="YOUR_EMAIL_PASSWORD"
-      export SERVER_NAME="YOUR_YANDEX_SERVER_NAME"
-      export MAIL_USERNAME="YOUR_YANDEX_EMAIL_USERNAME"
-      export MAIL_PASSWORD="YOUR_YANDEX_EMAIL_PASSWORD"
       export SERCET_KEY="YOUR_SECRET_KEY"
       export CLIENT_ID="YOUR_PAYPAL_CLIENT_ID"
       export CLIENT_SECRET="YOUR_PAYPAL_CLIENT_SECRET"
