@@ -6,20 +6,20 @@
 
 ## Live Website Demo https://snap-link.site
 
-<a href="https://www.youtube.com/watch?v=w_dil0uYST8" target="blank">
+<a href="https://drive.google.com/file/d/1uvaYyFd8SAvUq2PrSX73ayGAEUKLFd37/view" target="blank">
    <p align="center">Watch Our Website Live Demonstration </p>
    <p align="center">
-      <img src="https://i.postimg.cc/xTc828LT/snaplink-home.png" style="width:70%; height:70%; display: block; margin: auto;"  target="blank" alt="SnapLinkImageDemo" />
+      <img src="https://snap-link.site/image/6797006311e0f34a34acac07" style="width:70%; height:70%; display: block; margin: auto;"  target="blank" alt="SnapLinkImageDemo" />
    </p>
 </a>
 
 ## Google Slides Presentation
 <p align="center"> <strong>See Our Portfolio Project Slides Presentation</strong></p>
 
-<a href="https://docs.google.com/presentation/d/1jCl3qBBTht1y3l57cOa7dXeyZpLPgDvI/" target="blank">
+<a href="https://docs.google.com/presentation/d/1F9q2Lkk_px66vA2UpWZ1RIu9t0kKiA0C" target="blank">
    <p align="center"> <strong>Click Here or on the image below</strong></p>
    <p align="center">
-   <img src="https://i.postimg.cc/Vk35kwzQ/Snap-Link-Slide.jpg" style="max-width:70%;height:70%; display: block; margin: auto;"  alt="snap-link.site" />
+   <img src="https://snap-link.site/image/6797010e716d638482537d24" style="max-width:70%;height:70%; display: block; margin: auto;"  alt="snap-link.site" />
    </p>
 </a>
 
