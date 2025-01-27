@@ -446,8 +446,8 @@ button:hover {
 
   .popup-content {
       position: relative;
-      width: 800px;
-      height: 500px;
+      width: auto;
+      height: auto;
       background: white;
       border-radius: 10px;
       overflow: hidden;
@@ -680,7 +680,7 @@ button:hover {
     column-gap: 3rem;
   }
   .home__container{
-    height: 950px;
+    height: 750px;
   }
   .home__data{
     max-width: 610px;
@@ -726,4 +726,98 @@ button:hover {
     align-self: center;
   }
 
+}
+
+
+
+/* Optional CSS Styling */
+#uploadPopup {
+  width: 600px;
+  border-radius: 8px;
+}
+
+#uploadForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#uploadForm input[type="text"],
+#uploadForm input[type="file"] {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#uploadForm button {
+  padding: 8px 16px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#uploadForm button[type="button"] {
+  background: #6c757d;
+}
+
+#uploadStatus {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+
+
+/* srollbar */
+
+
+/* Container for the gallery */
+.gallery-container {
+  width: 100%; /* Full width */
+  max-width: 1200px; /* Optional: Limit maximum width */
+  margin: 0 auto; /* Center the gallery */
+  padding: 20px; /* Add some padding */
+}
+
+/* Container for the image list */
+.image-list {
+  display: flex; /* Use flexbox for horizontal layout */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  gap: 10px; /* Add spacing between images */
+  padding-bottom: 10px; /* Add space for scrollbar */
+}
+
+/* Individual image items */
+.image-item {
+  flex: 0 0 auto; /* Prevent flex items from shrinking */
+  width: 150px; /* Set a fixed width for each image */
+  height: 150px; /* Set a fixed height for each image */
+  border: 1px solid #ddd; /* Optional: Add a border */
+  border-radius: 8px; /* Optional: Add rounded corners */
+  overflow: hidden; /* Ensure images don't overflow */
+}
+
+/* Thumbnail images */
+.thumbnail {
+  width: 100%; /* Make images fill the container */
+  height: 100%; /* Make images fill the container */
+  object-fit: cover; /* Ensure images cover the container */
+  cursor: pointer; /* Add pointer cursor for clickable images */
+}
+
+/* No images message */
+.no-images {
+  text-align: center; /* Center the message */
+  color: #888; /* Light gray text */
+  font-style: italic; /* Italicize the message */
+}
+
+.image-list {
+  display: grid; /* Use grid for vertical layout */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid */
+  gap: 10px; /* Add spacing between images */
+  max-height: 400px; /* Set a fixed height for vertical scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding-right: 10px; /* Add space for scrollbar */
 }

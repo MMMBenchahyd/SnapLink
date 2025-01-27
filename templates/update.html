@@ -1,37 +1,27 @@
-{% extends 'base.html' %}
-
-{% block head %}
+{% extends 'base.html' %} {% block head %}
 <title>Rename image - SnapLink &copy;</title>
-{% endblock %}
-
-{% block body %}
-
-
+{% endblock %} {% block body %}
 
 <main class="main">
-    <!--==================== update page form ====================-->
-    <section class="container home__container">
-        <div class="page__data page__border">
+  <!--==================== update page form ====================-->
+  <section class="container home__container">
+    <div class="page__data page__border">
+      <div>
+        <h1 style="text-align: center">Updating image name</h1>
 
-            <div>
-                <h1 style="text-align: center;">Updating image name</h1>
-
-                <form action="/update/{{image.id}}" method="POST">
-                    <input type="text" name="content" id="content" value="{{image.content}}"
-                        placeholder="Enter a new name ">
-                    <button type="submit"> <strong>Rename</strong></button>
-                </form>
-            </div>
-
-
-        </div>
-
-
-
-    </section>
-
+        <form action="/update/{{image.id}}" method="POST">
+          <input
+            type="text"
+            name="content"
+            id="content"
+            value="{{image.content}}"
+            placeholder="Enter a new name "
+          />
+          <button type="submit"><strong>Rename</strong></button>
+        </form>
+      </div>
+    </div>
+  </section>
 </main>
-
-
 
 {% endblock %}

@@ -1,24 +1,20 @@
-{% extends 'base.html' %}
-
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 
 <main class="main">
-    <!--==================== Payment Canceled Block ====================-->
-    <section class="container home__container">
-        <div class="page__data page__border">
+  <!--==================== Payment Canceled Block ====================-->
+  <section class="container home__container">
+    <div class="page__data page__border">
+      <div>
+        <h1 style="text-align: center">Payment Canceled</h1>
 
-            <div>
-                <h1 style="text-align: center;">Payment Canceled</h1>
+        <p style="text-align: center">Your payment has been canceled.</p>
 
-                <p style="text-align: center;">Your payment has been canceled.</p>
-
-                <div style="text-align: center; margin-top: 20px;">
-                    <a href="/" class="button"><strong>Return to Home</strong></a>
-                </div>
-            </div>
-
+        <div style="text-align: center; margin-top: 20px">
+          <a href="/" class="button"><strong>Return to Home</strong></a>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 </main>
 
 {% endblock %}

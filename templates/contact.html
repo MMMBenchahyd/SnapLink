@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Privacy Policy - SnapLink &copy;</title>
+<title>Contact us - SnapLink &copy;</title>
 {% endblock %}
 
 {% block body %}
@@ -10,43 +10,26 @@
     <section class="container">
         <div class="page__data page__border">
 
-            <h2>Contact Us</h2>
-            <p>If you need to send a message, please fill out the form below:</p>
+            <h1 class="home__title">Contact Us</h1>
+            <p>If you need to contact us, please send an email to <a href="mailto:support@snaplink.com">support@snaplink.com</a>.  
+                <br><br>
 
-            <form id="contactForm" action="/contact" method="POST" class="form-container">
-                <div class="form-group">
-                    <label for="name" class="form-label">Full Name:</label>
-                    <input type="text" id="username" name="name" placeholder="Enter your name" required class="form-input">
-                    <small id="nameError" class="error-message"></small> 
-                </div>
-            
-                <div class="form-group">
-                    <label for="email" class="form-label">Email Address:</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email" class="form-input" required >
-                    <small id="emailError" class="error-message"></small> 
-                </div>
+                When reaching out, try to specify the subject of your inquiry to help us assist you faster.  
+                <br><br>
 
-            
-                <div class="form-group">
-                    <label for="subject" class="form-label">Subject:</label>
-                    <select id="subject" name="subject" required class="form-select">
-                        <option value="" disabled selected>Select a subject</option>
-                        <option value="dmca">Illegal Content or Rights Violations (DMCA Complaint)</option>
-                        <option value="general">General Questions/Concerns</option>
-                        <option value="bugs">Suggestions and Bug Reports</option>
-                        <option value="collab">Collaboration/Advertising</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-            
-                <div class="form-group">
-                    <label for="message" class="form-label">Message (English only):</label>
-                    <textarea id="message" name="message" rows="5" placeholder="Type your message here..." required class="form-textarea"></textarea>
-                    <small id="messageError" class="error-message"></small> 
-                </div>
-            
-                <button type="submit" class="form-button">Send Message</button>
-            </form>
+                If possible, include relevant details about your request, such as:  <br> <br>
+                </p>
+                
+                <ul>
+                    <li><strong>Illegal Content or Rights Violations (DMCA Complaint):</strong> Provide links and details about the <br> <br> </issue></li>
+                    <li><strong>General Questions/Concerns:</strong> Any inquiries regarding our services. <br> <br> </li>
+                    <li><strong>Suggestions and Bug Reports:</strong> Describe the issue or suggestion clearly. <br> <br></li>
+                    <li><strong>Collaboration/Advertising:</strong> Explain your proposal or partnership request. <br> <br> </li>
+                    <li><strong>Other:</strong> Any topic not covered above. <br> </li>
+                </ul>
+                <br> <br>
+                <p>We strive to respond as quickly as possible. Thank you for reaching out!</p>
+                
             
         </div>
     </section>

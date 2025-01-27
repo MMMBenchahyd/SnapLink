@@ -1,92 +1,155 @@
-{% extends 'base.html' %}
-
-{% block head %}
-<title>Gallery - SnapLink &copy</title>
-{% endblock %}
-
-{% block body %}
-
-
+{% extends 'base.html' %} {% block head %}
+<title>Gallery - SnapLink &copy;</title>
+{% endblock %} {% block body %}
 
 <main class="main">
-    <!--==================== home ====================-->
-    <section class="container home__container">
-        <div class="page__data page__border">
-            <!-- user gallery image listing -->
+  <!--==================== Upload/gallery Home Section ====================-->
+  <section class="container home__container">
+    <!--==================== Gallery Section ====================-->
+    <div class="page__data page__border">
+      <!-- Upload Button -->
+      <button class="home__button" onclick="openUploadPopup()">
+        Click Here To Upload Image
+      </button>
 
-            <div class="gallery-container">
-                <div class="page__title"> <strong> Image Gallery </strong></div>
-                {% if images|length > 0 %}
-                <div class="image-list">
-                    {% for image in images %}
-                    {% if image.file_content|length > 0 %}
-                    <div class="image-item">
-                        <!-- Pass img_id explicitly to the popup box -->
-                        <img src="/image/{{ image.img_id }}" alt="{{ image.filename }}" class="thumbnail"
-                            onclick="openPopup('/image/{{ image.img_id }}', '{{ image.img_id }}', '{{ image.filename }}', '{{ image.date_created }}')" />
-                    </div>
+      <!-- Upload Popup -->
+      <div
+        id="uploadPopup"
+        style="
+          display: none;
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: white;
+          padding: 20px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          z-index: 1000;
+        "
+      >
+        <h2><center>Upload Image</center></h2>
+        <form id="uploadForm" class="auth-card">
+          <!-- Filename Input -->
+          <label for="content">Filename (optional):</label>
+          <input
+            type="text"
+            name="content"
+            id="imageName"
+            placeholder="Enter filename"
+          />
 
-                    {% else %}
-                    <div class="no-thumbnail">
-                        <span>No Thumbnail</span>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                </div>
-                {% else %}
-                <div class="no-images">
-                    <span>No images available</span>
-                </div>
-                {% endif %}
-            </div>
+          <!-- File Input -->
+          <label for="file" class="auth-button" aria-live="polite"
+            ><center>Choose Your Image</center></label
+          >
+          <input type="file" name="file" id="file" accept="image/*" required />
 
-            <!-- this is the part of code for the popup box by clicked image  -->
-            <div id="image-popup" class="popup">
+          <!-- Form Buttons -->
+          <button type="submit">Upload</button>
+          <button
+            type="button"
+            class="auth-button"
+            onclick="closeUploadPopup()"
+          >
+            Cancel
+          </button>
+        </form>
 
-                <div class="popup-content">
-                    <i class="close-btn" onclick="closePopup()"> Close <i class="ri-close-large-fill"></i></i>
-                    <div class="popup-body">
-                        <!-- Image Section -->
-                        <div class="popup-image">
-                            <div class="thumbnail-container">
-                                <img id="popup-image" src="" alt="Popup Image">
-                                <div class="thumbnail-description">
-                                    <p><span>Image Name:</span> example.jpg</p>
-                                    <p><span>Creation Date:</span> 2025-01-06</p>
-                                    <p><span> <i class="ri-spam-2-line"></i> update:</span> JEPG</p>
-                                    <p><span> <i class="ri-spam-2-line"></i> download:</span> JPEG</p>
-                                    <p><span> <i class="ri-spam-2-line"></i> delete:</span> JPEG</p>
-                                </div>
-                            </div>
-                        </div>
+        <!-- Upload Status Display -->
+        <div id="uploadStatus"></div>
+      </div>
 
-                        <!-- Table Section -->
-                        <div class="popup-table thumbnail-container">
-                            <table>
-                            <!--
-                            <thead>
-                            <tr>
-                                <th>Link Name</th>
-                                <th>Link Text</th>
-                                <th>Copy Link</th>
-                            </tr>
-                            </thead>  optional: removed for best ui  
-                            -->
-                                <tbody>
-                                    <!-- dynamic java scriptt rows inserted here -->
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <!-- Overlay for Popup -->
+      <div
+        id="uploadOverlay"
+        style="
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 999;
+        "
+      ></div>
 
+      <div class="gallery-container">
+        <div class="page__title"><strong>Image Gallery</strong></div>
 
-
+        <!-- Check if images exist -->
+        {% if images|length > 0 %}
+        <div class="image-list">
+          <!-- Loop through each image -->
+          {% for image in images %} {% if image.file_content|length > 0 %}
+          <div class="image-item">
+            <!-- Display thumbnail and open popup on click -->
+            <img
+              src="/image/{{ image.img_id }}"
+              alt="{{ image.filename }}"
+              class="thumbnail"
+              onclick="openPopup('/image/{{ image.img_id }}', '{{ image.img_id }}', '{{ image.filename }}', '{{ image.date_created }}')"
+            />
+          </div>
+          {% else %}
+          <!-- Placeholder if no thumbnail is available -->
+          <div class="no-thumbnail">
+            <span>No Thumbnail</span>
+          </div>
+          {% endif %} {% endfor %}
         </div>
-    </section>
+        {% else %}
+        <!-- Message if no images are available -->
+        <div class="no-images">
+          <span>No images available</span>
+        </div>
+        {% endif %}
+      </div>
 
+      <!--==================== Image Popup Section ====================-->
+      <div id="image-popup" class="popup">
+        <div class="popup-content">
+          <!-- Close Button -->
+          <i class="close-btn" onclick="closePopup()"
+            >Close <i class="ri-close-large-fill"></i
+          ></i>
+          <div class="popup-body">
+            <!-- Image Section -->
+            <div class="popup-image">
+              <div class="thumbnail-container">
+                <!-- Popup Image -->
+                <img id="popup-image" src="" alt="Popup Image" />
+                <!-- Image Details -->
+                <div class="thumbnail-description">
+                  <p><span>Image Name:</span> example.jpg</p>
+                  <p><span>Creation Date:</span> 2025-01-06</p>
+                  <p>
+                    <span><i class="ri-spam-2-line"></i> Update:</span> JPEG
+                  </p>
+                  <p>
+                    <span><i class="ri-spam-2-line"></i> Download:</span> JPEG
+                  </p>
+                  <p>
+                    <span><i class="ri-spam-2-line"></i> Delete:</span> JPEG
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Table Section -->
+            <div class="popup-table thumbnail-container">
+              <table>
+                <!-- Table Body (Dynamic Rows Inserted via JavaScript) -->
+                <tbody>
+                  <!-- Dynamic rows will be inserted here -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
-
 
 {% endblock %}
